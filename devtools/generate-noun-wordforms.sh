@@ -20,30 +20,40 @@ fi
 ######### USER Variables - change these to your liking: #########
 # Codes for the word forms to be generated - list as many or few as needed:
 morf_codes="+N+Sg+Nom \
+            +N+Sg+Nom \
             +N+Sg+Gen \
-            +N+Sg+Ill \
+            +N+Sg+Acc \
+            +N+Sg+Dat \
+            +N+Sg+Abl \
+            +N+Sg+Ins \
             +N+Sg+Com \
+            +N+Sg+Dir \
             +N+Pl+Nom \
+            +N+Pl+Gen \
+            +N+Pl+Acc \
+            +N+Pl+Dat \
+            +N+Pl+Abl \
+            +N+Pl+Ins \
             +N+Pl+Com \
-            +N+Ess"
+            +N+Pl+Dir"
 
 # Lexicon source file for lexicons and lemmas:
-source_file=src/fst/stems/nouns.lexc
+source_file=src/fst/morphology/stems/nouns.lexc
 
 # Lexicons that should NOT be used to extract lemmas (egrep expression):
 exception_lexicons="(flagK)"
 
 # FST used for generation, MINUS suffix:
-generator_file=src/generator-gt-norm
+generator_file=src/fst/generator-gt-norm
 
 # How many lemmas maximally for each lexicon:
-lemmacount=10
+lemmacount=20
 
 # Specify path to the dir containing the script used for generation:
 script_dir=$giella_core/scripts
 
 ################## DO NOT CHANGE BELOW HERE!!! ##################
-source $script_dir/generate-wordforms-for-cont_lexes.sh \
+"$script_dir/generate-wordforms-for-cont_lexes.sh" \
         "$giella_core" \
         "$morf_codes" \
         "$source_file" \

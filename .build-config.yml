@@ -1,0 +1,8 @@
+build:
+  analysers: true
+  spellers: true
+  grammar-checkers: false
+check:
+  analysers: false
+  spellers: false
+  grammar-checkers: false

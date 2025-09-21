@@ -18,7 +18,7 @@ GIELLA_GC_WHSPACE_ANAL_SRC=analyser-gt-whitespace.regex
 GIELLA_GC_DISAMBIGUATOR_SRC=disambiguator.cg3
 
 # If a valency file is used, specify its name here:
-GIELLA_GC_VALENCY=
+GIELLA_GC_VALENCY_SRC=
 
 # If there are additional, language specific files used in the GC archive,
 # specify here:
@@ -30,3 +30,4 @@ LOCAL_GC_ZIP_FILES=
 
 #### Do NOT edit below here: ####
 include $(top_srcdir)/../giella-core/am-shared/tools-grammarcheckers-dir-include.am
+include $(top_srcdir)/../giella-core/am-shared/devtest-include.am

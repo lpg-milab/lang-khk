@@ -2,12 +2,12 @@
           developer="Divvun"
           copyright=""
           version="0.1"
-          contact="Divvun divvun@uit.no"
+          contact="Divvun feedback@divvun.no"
           depversions="vislcg3 >=1.1.2.12361
                        hfst >= 3.13.0
                        divvun-gramcheck >= 0.2.0">
 
-  <pipeline name="@GLANG@-analyser"
+  <pipeline name="analyser"
             language="@GLANG2@"
             type="Analyser">
     <tokenize><tokenizer n="tokeniser-disamb-gt-desc.pmhfst"/></tokenize>
@@ -19,6 +19,23 @@
     <cg><grammar n="disambiguator.bin"/></cg>
     <cg><grammar n="functions.bin"/></cg>
     <cg><grammar n="dependency.bin"/></cg>
+  </pipeline>
+
+  <pipeline name="korp-analyser"
+            language="@GLANG2@"
+            type="Analyser">
+    <tokenize><tokenizer n="tokeniser-disamb-gt-desc.pmhfst"/></tokenize>
+    <cg><grammar n="mwe-dis.bin"/></cg>
+    <mwesplit/>
+    <cg><grammar n="disambiguator.bin"/></cg>
+    <cg><grammar n="functions.bin"/></cg>
+    <cg><grammar n="dependency.bin"/></cg>
+  </pipeline>
+
+  <pipeline name="tokeniser"
+            language="@GLANG2@"
+            type="Tokeniser">
+    <tokenize><tokenizer n="tokeniser-disamb-gt-desc.pmhfst"/></tokenize>
   </pipeline>
 
 </pipespec>

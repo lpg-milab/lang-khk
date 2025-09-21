@@ -8,12 +8,16 @@ SUBDIRS = . test
 # NB! If any of the filenames below are changed, then remember to also update
 # the corresponding filename in `pipespec.xml.in`
 
+GIELLA_ANL_IPA_FST_FILE=
 GIELLA_ANL_VALENCY_SRC=
 GIELLA_ANL_WHSPACE_ANAL_SRC=analyser-gt-whitespace.regex
 GIELLA_ANL_MWEDIS_SRC=mwe-dis.cg3
 GIELLA_ANL_DISAMBIGUATOR_SRC=disambiguator.cg3
 GIELLA_ANL_FUNCTIONS_SRC=functions.cg3
 GIELLA_ANL_DEPENDENCY_SRC=dependency.cg3
+
+# Tokeniser:
+GIELLA_ANL_TOKENISER=tokeniser-disamb-gt-desc.pmhfst
 
 # List transcriptor source files from src/transcriptions/ (without extension)
 # that should NOT be included in the tts text processing (by default everything
@@ -30,3 +34,4 @@ LOCAL_ANL_ZIP_FILES=
 
 #### Do NOT edit below here: ####
 include $(top_srcdir)/../giella-core/am-shared/tools-tts-dir-include.am
+include $(top_srcdir)/../giella-core/am-shared/devtest-include.am

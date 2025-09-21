@@ -1,9 +1,20 @@
 The Halh (Khalkha) Mongolian morphology and tools
 ==========================================
 
+[![Maturity](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgiellalt%2Flang-khk%2Fgh-pages%2Fmaturity.json)](https://giellalt.github.io/MaturityClassification.html)
+![Lemma count](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgiellalt%2Flang-khk%2Fgh-pages%2Flemmacount.json)
 [![GitHub issues](https://img.shields.io/github/issues-raw/giellalt/lang-khk)](https://github.com/giellalt/lang-khk/issues)
-[![Build Status](https://github.com/giellalt/lang-khk/workflows/Speller%20CI+CD/badge.svg)](https://github.com/giellalt/lang-khk/actions)
 [![License](https://img.shields.io/github/license/giellalt/lang-khk)](https://github.com/giellalt/lang-khk/blob/main/LICENSE)
+[![Doc Build Status](https://github.com/giellalt/lang-khk/workflows/Docs/badge.svg)](https://github.com/giellalt/lang-khk/actions)
+[![CI/CD Build Status](https://divvun-tc.giellalt.org/api/github/v1/repository/giellalt/lang-khk/main/badge.svg)](https://divvun-tc.giellalt.org/api/github/v1/repository/giellalt/lang-khk/main/latest)
+
+Download nightly / CI/CD installation packages for testing (contains the core zhfst file(s)):
+
+[![Windows](https://img.shields.io/badge/download%40latest-Windows--bhfst-brightgreen)](https://pahkat.uit.no/main/download/speller-khk?platform=windows&channel=nightly)
+[![MacOS](https://img.shields.io/badge/download%40latest-macOS--bhfst-brightgreen)](https://pahkat.uit.no/main/download/speller-khk?platform=macos&channel=nightly)
+[![Mobile](https://img.shields.io/badge/download%40latest-mobile--bhfst-brightgreen)](https://pahkat.uit.no/main/download/speller-khk?platform=mobile&channel=nightly)
+
+__NB!!__ Note that the nightly / CI/CD installation packages are not tested for language quality, and might contain regressions and errors.
 
 This repository contains finite state source files for the Halh Mongolian language,
 for building morphological analysers, proofing tools
@@ -17,13 +28,22 @@ Install proofing tools and [keyboards](https://github.com/giellalt/keyboard-khk)
 for the Halh Mongolian language by using the [Divvun Installer](http://divvun.no)
 (some languages are only available via the nightly channel).
 
+Download and test speller files
+-------------------------------
+
+The speller files downloadable at the top of this page (the `*.bhfst` files) can
+be used with [divvunspell](https://github.com/divvun/divvunspell), to test their
+performance. These files are the exact same ones as installed on users' computers
+and mobile phones. Desktop and mobile speller files differ from each other in the
+error model and should be tested separately — thus also two different downloads.
+
 Documentation
 -------------
 
 Documentation can be found at:
 
--   <https://giellalt.uit.no/lang/khk/KhalkhaMongolianDocumentation.html>
--   <https://giellalt.uit.no/index.html>
+- [Language specific documentation](https://giellalt.github.io/lang-khk/)
+- [General documentation](https://giellalt.github.io/)
 
 Core dependencies
 -----------------
@@ -34,7 +54,7 @@ dictionaries, you need:
 - an FST compiler: [HFST](https://github.com/hfst/hfst), [Foma](https://github.com/mhulden/foma) or [Xerox Xfst](https://web.stanford.edu/~laurik/fsmbook/home.html)
 - [VislCG3](https://visl.sdu.dk/svn/visl/tools/vislcg3/trunk) Constraint Grammar tools
 
-To install VislCG3 and HFST, just copy/paste this into your Terminal on **Mac OS X**:
+To install VislCG3 and HFST, just copy/paste this into your Terminal on **macOS**:
 
 ```
 curl https://apertium.projectjj.com/osx/install-nightly.sh | sudo bash
@@ -85,4 +105,44 @@ describes the GNU build system in detail, but for most users it is the usual:
 ./configure
 make
 (as root) make install
+```
+
+Citing
+------
+
+<!-- Add language specific citation stuff here and to the CITATION.cff -->
+
+If you use language data from more than one GiellaLT language, consider citing
+[our LREC 2022 article on whole
+infra](https://aclanthology.org/2022.lrec-1.125/):
+
+> Linda Wiechetek, Katri Hiovain-Asikainen, Inga Lill Sigga Mikkelsen,
+  Sjur Moshagen, Flammie Pirinen, Trond Trosterud, and Børre Gaup. 2022.
+  *Unmasking the Myth of Effortless Big Data - Making an Open Source
+  Multi-lingual Infrastructure and Building Language Resources from Scratch*.
+  In Proceedings of the Thirteenth Language Resources and Evaluation Conference,
+  pages 1167–1177, Marseille, France. European Language Resources Association.
+
+If you use bibtex, following is as it is on ACL anthology:
+
+```bibtex
+@inproceedings{wiechetek-etal-2022-unmasking,
+    title = "Unmasking the Myth of Effortless Big Data - Making an Open Source
+    Multi-lingual Infrastructure and Building Language Resources from Scratch",
+    author = "Wiechetek, Linda  and
+      Hiovain-Asikainen, Katri  and
+      Mikkelsen, Inga Lill Sigga  and
+      Moshagen, Sjur  and
+      Pirinen, Flammie  and
+      Trosterud, Trond  and
+      Gaup, B{\o}rre",
+    booktitle = "Proceedings of the Thirteenth Language Resources and Evaluation
+    Conference",
+    month = jun,
+    year = "2022",
+    address = "Marseille, France",
+    publisher = "European Language Resources Association",
+    url = "https://aclanthology.org/2022.lrec-1.125",
+    pages = "1167--1177"
+}
 ```

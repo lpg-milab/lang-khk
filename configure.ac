@@ -34,25 +34,13 @@ AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE(
   1.11.6 tar-pax -Wall -Werror
   foreign -Wno-portability
-  dnl Automake versions before 1.13 (when the serial-tests option was
-  dnl still the default) still defined the badly obsolete macro
-  dnl 'AM_PROG_CC_STDC'. By checking for the non-existence of this macro,
-  dnl we can now force serial testing for newer automakes (with prettier
-  dnl output) and at the same time work reasonably with older automakes.
-  dnl Code based on:
-  dnl https://lists.gnu.org/archive/html/automake/2013-01/msg00060.html
-  m4_ifndef([AM_PROG_CC_STDC], [serial-tests])
 )
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
-### Speller release version (usually different from the package version,
-### typically spellers are released more often than the language package):
-AC_SUBST([SPELLERVERSION], [0.1.1])
-
 ########## LANGUAGE SPECIFIC SETTINGS ##########
-# GLANG is the language code used to identify this project; it should be the
-# same as the directory name in $GIELLA_HOME/*langs/ and the same as the ISO 639
-# three-letter code for the language.
+# GLANG is the language code used to identify this project; it is the
+# ISO 639-3 three-letter code for the language.
+# It is also the second part of the repo name lang-XXX.
 # GTLANG is deprecated, defined for backwards compatibility.
 AC_SUBST([GLANG], [khk])
 AC_SUBST([GTLANG], $GLANG)
@@ -66,6 +54,24 @@ AC_SUBST([GTLANG2], $GLANG2)
 # GTLANGUAGE is deprecated, defined for backwards compatibility.
 AC_SUBST([GLANGUAGE], ["Halh Mongolian"])
 AC_SUBST([GTLANGUAGE], $GLANGUAGE)
+
+### Speller release version (usually different from the package version,
+### typically spellers are released more often than the language package):
+### Translate the *_NAT placeholder contents into
+### the native language of this repo.
+### The AC variables SPELLER_NAME_xxx and SPELLER_DESC_xxx are used in:
+### - manifest.toml.in
+### - tools/spellcheckers/index.*.xml.in
+AC_SUBST([SPELLERVERSION], [0.1.1])
+AC_SUBST([SPELLER_NAME_ENG], ["$GLANGUAGE spellchecker"])
+AC_SUBST([SPELLER_NAME_NATIVE], ["Autonym spellchecker"])
+AC_SUBST([SPELLER_DESC_ENG], ["A spellchecker for $GLANGUAGE, made by members of the language community, and by the Divvun and Giellatekno groups at UiT The Arctic University of Norway"])
+AC_SUBST([SPELLER_DESC_NATIVE], ["TRANSLATE: A spellchecker for $GLANGUAGE, made by members of the language community, and by the Divvun and Giellatekno groups at UiT The Arctic University of Norway"])
+
+### Grammar checker release version (usually different from the package version,
+### typically grammar checkers are released more often than the language
+### package, and also different from the speller release version):
+AC_SUBST([GRAMCHECKVERSION], [0.1.0])
 
 # Alternate writing system(s) should be listed here using the ISO 15924 code.
 # Multiple alternate WS's should be space separated. For a list of such codes
@@ -116,10 +122,10 @@ AM_CONDITIONAL([DEFAULT_CASE_HANDLING], [ true ])
 AC_SUBST([DIALECTS], [""])
 AM_CONDITIONAL([HAVE_DIALECTS], [test "x$DIALECTS" != "x"])
 
-########## LANGUAGE SPECIFIC BUILD SETTINGS ##########
+########## LANGUAGE SPECIFIC _BUILD_ SETTINGS ##########
 
 # NO_PHONOLOGY = yes
-# ... makes the bulid process skip compilation of anything in the fst/
+# ... makes the build process skip compilation of phonology.* in the fst/
 # dir. This is mainly useful when building from external sources such that the
 # lexical fst built in the fst/ dir is actually the full analyser.
 # The variable can also be set if a language is such that everything is
@@ -135,8 +141,8 @@ AM_CONDITIONAL([SKIP_PHONOLOGY], [test "x$NO_PHONOLOGY" != "x"])
 #
 # load stack fst/lexicon.&FST&
 #
-# where &FST& will be automatically replaced with the relevant fst suffix (xfst,
-# hfst, foma). When done like that, the phonology rules will be composed with
+# where &FST& will be automatically replaced with the relevant fst suffix
+# (hfst, foma). When done like that, the phonology rules will be composed with
 # the lexicon directly, which should lead to much faster compilaton of xfst
 # rewrite rules.
 AC_SUBST([LEXREF_IN_XFSCRIPT], [""])
@@ -147,7 +153,6 @@ AM_CONDITIONAL([LEXREF_IN_PHONOLOGY], [test "x$LEXREF_IN_XFSCRIPT" != "x"])
 # they want to compile theirs stuff with
 AC_SUBST([DEFAULT_FOMA], [no])
 AC_SUBST([DEFAULT_HFST], [yes])
-AC_SUBST([DEFAULT_XFST], [no])
 AC_SUBST([DEFAULT_HYPERMIN], [no])
 AC_SUBST([DEFAULT_REVERCI], [yes])
 AC_SUBST([DEFAULT_HFST_BACKEND], [foma])
@@ -158,9 +163,6 @@ AC_SUBST([DEFAULT_CUSTOM_FSTS], [yes])
 
 # Tests and sets up giella-core directories and scripts
 gt_PROG_SCRIPTS_PATHS
-
-# Tests and sets up XFST
-gt_PROG_XFST
 
 # Tests and sets up FOMA
 gt_PROG_FOMA
@@ -181,6 +183,18 @@ gt_PROG_SAXON
 # This should be the last step so that all program variables are available
 # to the enable checks
 gt_ENABLE_TARGETS
+
+# Add usage of optional shared data here.
+# By default, all languages have shared symbols and punctuation.
+# One language repo can even share / use data from another language repo!
+# See lang-smj for an example.
+# Add locally used shares below this line:
+gt_USE_SHARED([common], [shared-mul], [giella-shared-mul])
+AM_CONDITIONAL([HAVE_SHARED_COMMON], [test x$gt_SHARED_common != xfalse])
+
+gt_NEED_SHARED([mul], [shared-mul], [giella-shared-mul], [0.0.3])
+
+# Locally used shares above this line
 
 # Call a function that lists all files that should be processed by autoconf:
 gt_CONFIG_FILES
